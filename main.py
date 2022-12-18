@@ -1,5 +1,5 @@
 '''pip3 install flask'''
-from flask import Flask,render_template
+from flask import Flask,render_template,request
 import mysql.connector
 app = Flask('__name__')
 
@@ -8,9 +8,26 @@ app = Flask('__name__')
 def home():
     return render_template('home.html')
 
-@app.route('/profile/<int:Number>')
+@app.route('/event/join', methods=['POST'])
+def join():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"SELECT id FROM users WHERE studentnumber = {content['studentnumber']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{result[0]}, {content['eventid']});"
+    cursor.execute(query)
+    connection.commit()
+    return "Joined"
+
+@app.route('/profile/<int:Number>', methods=['GET'])
 def endpoint(Number):
-    print(Number)
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
         user = "admin",
@@ -23,18 +40,71 @@ def endpoint(Number):
     result = cursor.fetchall()
     return result
 
-@app.route('/signup')
-def signup():
-
+@app.route('/chapter/<int:Number>', methods=['GET'])
+def chapter(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
         user = "admin",
         password = "admin123",
         database = "clubeedb"
     )
+    query = f"SELECT * FROM chapter WHERE id = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
 
+@app.route('/events/all', methods=['GET'])
+def events():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT * FROM event;"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+@app.route('/events/highlited'  , methods=['GET'])
+def highlighted():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT * FROM event WHERE highlited = 1;"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+@app.route('/event/participated/<int:Number>', methods=['GET'])
+def participated(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+
+
+
+@app.route('/chapteradmin')
+def chapteradmin():
+    return render_template('chapteradmin.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000)
     #app.run(debug=True) #can alter host and port number here. Right now the default host is localhost and port is 5000
-    
