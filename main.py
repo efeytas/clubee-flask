@@ -8,7 +8,7 @@ app = Flask('__name__')
 def home():
     return render_template('home.html')
 
-@app.route('/event/join', methods=['POST'])
+@app.route('api/event/join', methods=['POST'])
 def join():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -26,7 +26,7 @@ def join():
     connection.commit()
     return "Joined"
 
-@app.route('/profile/<int:Number>', methods=['GET'])
+@app.route('api/profile/<int:Number>', methods=['GET'])
 def endpoint(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -40,7 +40,7 @@ def endpoint(Number):
     result = cursor.fetchall()
     return result
 
-@app.route('/chapter/<int:Number>', methods=['GET'])
+@app.route('api/chapter/<int:Number>', methods=['GET'])
 def chapter(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -54,7 +54,7 @@ def chapter(Number):
     result = cursor.fetchall()
     return result
 
-@app.route('/events/all', methods=['GET'])
+@app.route('api/events/all', methods=['GET'])
 def events():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -68,7 +68,7 @@ def events():
     result = cursor.fetchall()
     return result
 
-@app.route('/events/highlited'  , methods=['GET'])
+@app.route('api/events/highlited'  , methods=['GET'])
 def highlighted():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -81,7 +81,7 @@ def highlighted():
     cursor.execute(query)
     result = cursor.fetchall()
     return result
-@app.route('/event/participated/<int:Number>', methods=['GET'])
+@app.route('api/event/participated/<int:Number>', methods=['GET'])
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
