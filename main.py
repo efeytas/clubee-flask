@@ -85,7 +85,7 @@ def events():
     result = cursor.fetchall()
     return result
 
-@app.route('/api/events/highlited'  , methods=['GET'])
+@app.route('/api/events/highlighted'  , methods=['GET'])
 def highlighted():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -93,7 +93,7 @@ def highlighted():
         password = "admin123",
         database = "clubeedb"
     )
-    query = f"SELECT * FROM event WHERE highlited = 1;"
+    query = f"SELECT * FROM event WHERE highlighted = 1;"
     cursor = connection.cursor()
     cursor.execute(query)
     result = cursor.fetchall()
@@ -122,6 +122,24 @@ def participated(Number):
 @app.route('/chapteradmin', methods=['GET'])
 def chapteradmin():
     return render_template('chapteradmin.html')
+
+@app.route('/api/createevent', methods=['POST'])
+def createevent():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"INSERT INTO event (name,description,event_date,photolink,eventstatus,highlighted,chapter_id) VALUES ('{content['name']}', '{content['description']}','{content['event_date']}','{content['photolink']}',{content['eventstatus']}, {content['highlighted']},{content['chapter_id']});"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Event Created")
+    
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000)
