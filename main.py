@@ -18,7 +18,7 @@ def register():
         database = "clubeedb"
     )
     content = request.json
-    query = f"INSERT INTO users (full_name,email,amazon_id,studentnumber) VALUES ('{content['full_name']}', '{content['email']}', {content['studentnumber']},'{content['amazon_id']}',{content['studentnumber']} );"
+    query = f"INSERT INTO users (full_name,email,amazon_id,studentnumber) VALUES ('{content['full_name']}', '{content['email']}','{content['amazon_id']}',{content['studentnumber']} );"
     cursor = connection.cursor()
     cursor.execute(query)
     connection.commit()
