@@ -81,7 +81,7 @@ def highlighted():
     cursor.execute(query)
     result = cursor.fetchall()
     return result
-    
+
 @app.route('/api/event/participated/<int:Number>', methods=['GET'])
 def participated(Number):
     connection = mysql.connector.connect(
@@ -102,7 +102,7 @@ def participated(Number):
 
 
 
-@app.route('/chapteradmin')
+@app.route('/chapteradmin', methods=['GET'])
 def chapteradmin():
     return render_template('chapteradmin.html')
 
