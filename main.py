@@ -9,7 +9,7 @@ app = Flask('__name__')
 def home():
     return render_template('home.html')
 
-@app.route('/api/register')
+@app.route('/api/register' , methods=['POST'])
 def register():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
