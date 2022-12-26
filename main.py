@@ -1,12 +1,29 @@
 '''pip3 install flask'''
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,jsonify
 import mysql.connector
+
 app = Flask('__name__')
 
 
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password  = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"INSERT INTO users (name,email,password,photo_link,studentnumber) VALUES ('{content['name']}', '{content['email']}', {content['studentnumber']}, '{content['password']}', '{content['password']}', {content['photo_link']},{content['studentnumber']} );"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Registered")
+
 
 @app.route('/api/event/join', methods=['POST'])
 def join():
