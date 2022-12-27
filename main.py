@@ -137,7 +137,56 @@ def createevent():
     cursor.execute(query)
     connection.commit()
     return jsonify("Event Created")
-    
+
+@app.route('/api/edit-event-description', methods=['POST'])
+def editchapterdescription():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"UPDATE event SET description = '{content['description']}' WHERE id = {content['event_id']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Event Description Updated")
+
+@app.route('/api/highlight-event', methods=['POST'])
+def highlightevent():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"UPDATE event SET highlighted = 1 WHERE id = {content['event_id']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Event Highlighted")
+
+
+@app.route('/api/edit-chapter-description', methods=['POST'])
+def editchapterdescription():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"UPDATE chapter SET description = '{content['description']}' WHERE id = {content['chapter_id']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Chapter Description Updated")
+
+
+
+
 
 
 
