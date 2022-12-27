@@ -2,14 +2,14 @@
 from flask import Flask,render_template,request,jsonify
 import mysql.connector
 
-app = Flask('__name__')
+application = Flask('__name__')
 
 
-@app.route('/')
+@application.route('/')
 def home():
     return "helo"
 
-"""@app.route('/api/register' , methods=['POST'])
+"""@application.route('/api/register' , methods=['POST'])
 def register():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -25,7 +25,7 @@ def register():
     return jsonify("Registered")
 
 
-@app.route('/api/event/join', methods=['POST'])
+@application.route('/api/event/join', methods=['POST'])
 def join():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -43,7 +43,7 @@ def join():
     connection.commit()
     return "Joined"
 
-@app.route('/api/profile/<int:Number>', methods=['GET'])
+@application.route('/api/profile/<int:Number>', methods=['GET'])
 def endpoint(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -57,7 +57,7 @@ def endpoint(Number):
     result = cursor.fetchall()
     return result
 
-@app.route('/api/chapter/<int:Number>', methods=['GET'])
+@application.route('/api/chapter/<int:Number>', methods=['GET'])
 def chapter(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -71,7 +71,7 @@ def chapter(Number):
     result = cursor.fetchall()
     return result
 
-@app.route('/api/events/all', methods=['GET'])
+@application.route('/api/events/all', methods=['GET'])
 def events():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -85,7 +85,7 @@ def events():
     result = cursor.fetchall()
     return result
 
-@app.route('/api/events/highlighted'  , methods=['GET'])
+@application.route('/api/events/highlighted'  , methods=['GET'])
 def highlighted():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -99,7 +99,7 @@ def highlighted():
     result = cursor.fetchall()
     return result
 
-@app.route('/api/event/participated/<int:Number>', methods=['GET'])
+@application.route('/api/event/participated/<int:Number>', methods=['GET'])
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -119,11 +119,11 @@ def participated(Number):
 
 
 
-@app.route('/chapteradmin', methods=['GET'])
+@application.route('/chapteradmin', methods=['GET'])
 def chapteradmin():
     return render_template('chapteradmin.html')
 
-@app.route('/api/createevent', methods=['POST'])
+@application.route('/api/createevent', methods=['POST'])
 def createevent():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -138,7 +138,7 @@ def createevent():
     connection.commit()
     return jsonify("Event Created")
 
-@app.route('/api/edit-event-description', methods=['POST'])
+@application.route('/api/edit-event-description', methods=['POST'])
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -153,7 +153,7 @@ def editchapterdescription():
     connection.commit()
     return jsonify("Event Description Updated")
 
-@app.route('/api/highlight-event', methods=['POST'])
+@application.route('/api/highlight-event', methods=['POST'])
 def highlightevent():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -169,7 +169,7 @@ def highlightevent():
     return jsonify("Event Highlighted")
 
 
-@app.route('/api/edit-chapter-description', methods=['POST'])
+@application.route('/api/edit-chapter-description', methods=['POST'])
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -192,5 +192,5 @@ def editchapterdescription():
 
 
 if __name__ == "__main__":
-    app.run()
-    #app.run(debug=True) #can alter host and port number here. Right now the default host is localhost and port is 5000
+    application.run()
+    #application.run(debug=True) #can alter host and port number here. Right now the default host is localhost and port is 5000
