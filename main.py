@@ -192,5 +192,5 @@ def editchapterdescription():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",port=5000)
+    app.run()
     #app.run(debug=True) #can alter host and port number here. Right now the default host is localhost and port is 5000
