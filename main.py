@@ -183,6 +183,7 @@ def editchapterdescription():
     cursor.execute(query)
     connection.commit()
     return jsonify("Chapter Description Updated")
+    #.
 
 
 
