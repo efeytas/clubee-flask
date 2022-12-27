@@ -1,6 +1,5 @@
 '''pip3 install flask'''
-from flask import Flask,render_template,request,jsonify
-import mysql.connector
+from flask import Flask
 
 application = Flask('__name__')
 
