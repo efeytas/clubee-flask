@@ -1,5 +1,6 @@
 '''pip3 install flask'''
-from flask import Flask
+from flask import Flask,render_template,request,jsonify
+import mysql.connector
 
 application = Flask('__name__')
 
@@ -8,7 +9,7 @@ application = Flask('__name__')
 def home():
     return "helo"
 
-"""@application.route('/api/register' , methods=['POST'])
+@application.route('/api/register' , methods=['POST'])
 def register():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -184,7 +185,7 @@ def editchapterdescription():
     return jsonify("Chapter Description Updated")
     #."
 
-"""
+
 
 
 
