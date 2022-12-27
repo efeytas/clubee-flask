@@ -7,7 +7,7 @@ application = Flask('__name__')
 
 @application.route('/')
 def home():
-    return "helo"
+    return "dariaa"
 
 @application.route('/api/register' , methods=['POST'])
 def register():
