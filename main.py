@@ -9,7 +9,7 @@ app = Flask('__name__')
 def home():
     return render_template('home.html')
 
-@app.route('/api/register' , methods=['POST'])
+"""@app.route('/api/register' , methods=['POST'])
 def register():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -169,7 +169,7 @@ def highlightevent():
     return jsonify("Event Highlighted")
 
 
-"""@app.route('/api/edit-chapter-description', methods=['POST'])
+@app.route('/api/edit-chapter-description', methods=['POST'])
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -183,9 +183,9 @@ def editchapterdescription():
     cursor.execute(query)
     connection.commit()
     return jsonify("Chapter Description Updated")
-    #.
-"""
+    #."
 
+"""
 
 
 
