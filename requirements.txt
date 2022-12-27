@@ -1,7 +1,1 @@
-pip==21.2.4
 Flask==2.2.2
-sqlalchemy==1.4.45
-sqlalchemy-utils==0.37.9
-mysqlclient==2.0.3
-mysql-connector-python==8.0.27
-mysql-connector==2.2.9
