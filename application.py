@@ -7,7 +7,7 @@ application = Flask('__name__')
 application.config['AWS_DEFAULT_REGION'] = 'eu-central-1'
 application.config['AWS_COGNITO_DOMAIN'] = 'https://clubbee.auth.eu-central-1.amazoncognito.com'
 application.config['AWS_COGNITO_USER_POOL_ID'] = 'eu-central-1_SJQdxqfBU'
-application.config['AWS_COGNITO_USER_POOL_CLIENT_ID'] = '20cc8at7flbjp8oe3hunkf810b'
+application.config['AWS_COGNITO_USER_POOL_CLIENT_ID'] = '2lsianb31upsiq90eqek1s93v2'
 application.config['AWS_COGNITO_USER_POOL_CLIENT_SECRET'] = ''
 application.config['AWS_COGNITO_REDIRECT_URL'] = 'http://localhost:5000/aws_cognito_redirect'
 
