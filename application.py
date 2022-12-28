@@ -18,7 +18,7 @@ aws_auth = AWSCognitoAuthentication(application)
 @aws_auth.authentication_required
 def home():
     claims = aws_auth.claims
-    return render_template('index.html')
+    return render_template('home.html')
 
 @application.route('/api/register' , methods=['POST'])
 def register():
@@ -89,6 +89,7 @@ def chapter(Number):
     return result
 
 @application.route('/api/events/all', methods=['GET'])
+@aws_auth.authentication_required
 def events():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
