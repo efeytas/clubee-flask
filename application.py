@@ -7,7 +7,7 @@ application = Flask('__name__')
 
 @application.route('/')
 def home():
-    return "dariaa"
+    return render_template('index.html')
 
 @application.route('/api/register' , methods=['POST'])
 def register():
@@ -17,6 +17,12 @@ def register():
         password  = "admin123",
         database = "clubeedb"
     )
+    query = f"SELECT * FROM users WHERE studentnumber = {request.json['studentnumber']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    if len(result) > 0:
+        return jsonify("User already exists")
     content = request.json
     query = f"INSERT INTO users (full_name,email,amazon_id,studentnumber) VALUES ('{content['full_name']}', '{content['email']}','{content['amazon_id']}',{content['studentnumber']} );"
     cursor = connection.cursor()
