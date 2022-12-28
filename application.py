@@ -1,11 +1,21 @@
 '''pip3 install flask'''
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify, redirect, url_for
 import mysql.connector
-
+from flask_awscognito import AWSCognitoAuthentication
 application = Flask('__name__')
+
+"""application.config['AWS_DEFAULT_REGION'] = 'eu-central-1'
+application.config['AWS_COGNITO_DOMAIN'] = 'https://clubbee.auth.eu-central-1.amazoncognito.com'
+application.config['AWS_COGNITO_USER_POOL_ID'] = 'eu-central-1_SJQdxqfBU'
+application.config['AWS_COGNITO_USER_POOL_CLIENT_ID'] = '20cc8at7flbjp8oe3hunkf810b'
+application.config['AWS_COGNITO_USER_POOL_CLIENT_SECRET'] = ''
+application.config['AWS_COGNITO_REDIRECT_URL'] = 'http://localhost:5000/aws_cognito_redirect'
+"""
+aws_auth = AWSCognitoAuthentication(application)
 
 
 @application.route('/')
+@aws_auth.authentication_required
 def home():
     return render_template('index.html')
 
