@@ -1,15 +1,31 @@
 '''pip3 install flask'''
-from flask import Flask,render_template,request,jsonify
-import mysql.connector
+from flask import Flask,render_template,request,jsonify, redirect, url_for, make_response
+"""import mysql.connector
+from jwt.algorithms import RSAAlgorithm
+from flask_jwt_extended import (
+    JWTManager,
+    set_access_cookies,
+    verify_jwt_in_request_optional,
+    get_jwt_identity,
+)
+from flask_cors import CORS
+from flask_awscognito import AWSCognitoAuthentication
+"""
+from keys import get_cognito_public_keys
 
 application = Flask('__name__')
+"""application.config.from_object("src.config")
+application.config["JWT_PUBLIC_KEY"] = RSAAlgorithm.from_jwk(get_cognito_public_keys())
 
-
+CORS(application)
+aws_auth = AWSCognitoAuthentication(application)
+jwt = JWTManager(application)
+"""
 @application.route('/')
 def home():
-    return render_template('index.html')
+    return get_cognito_public_keys()
 
-@application.route('/api/register' , methods=['POST'])
+"""@application.route('/api/register' , methods=['POST'])
 def register():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -173,7 +189,7 @@ def highlightevent():
     cursor.execute(query)
     connection.commit()
     return jsonify("Event Highlighted")
-
+"""
 
 """@application.route('/api/edit-chapter-description', methods=['POST'])
 def editchapterdescription():
@@ -199,5 +215,6 @@ def editchapterdescription():
 
 
 if __name__ == "__main__":
+    
     application.run()
     #application.run(debug=True) #can alter host and port number here. Right now the default host is localhost and port is 5000
