@@ -86,12 +86,12 @@ def join():
     result = cursor.fetchall()
 
     if len(result) > 0:
-        return jsonify("Already joined")
+        return "Already joined"
     else:
         query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{resultid[0]}, {content['eventid']});"
         cursor.execute(query)
         connection.commit()
-        return jsonify("Joined")
+        return "Joined"
     
 
 @application.route('/api/profile/<int:Number>', methods=['GET']) # /api/profile/150180086 GET attığın zaman sana userın bilgilerini döndürür [[6,"Efe Yigit Tas","tase18@itu.edu.tr",null,"150180086"]]
