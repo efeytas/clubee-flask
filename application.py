@@ -42,7 +42,7 @@ def api_auth(func):
 def home():
     return render_template('home.html')
 
-@application.route('/api/register' , methods=['POST'])
+@application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
 @api_auth
 def register():
     connection = mysql.connector.connect(
@@ -65,7 +65,7 @@ def register():
     return jsonify("Registered")
 
 
-@application.route('/api/event/join', methods=['POST'])
+@application.route('/api/event/join', methods=['POST']) # eventid, studentnumber vermen gerekiyor join
 @api_auth
 def join():
     connection = mysql.connector.connect(
@@ -94,7 +94,7 @@ def join():
         return jsonify("Joined")
     
 
-@application.route('/api/profile/<int:Number>', methods=['GET'])
+@application.route('/api/profile/<int:Number>', methods=['GET']) # /api/profile/150180086 GET attığın zaman sana userın bilgilerini döndürür [[6,"Efe Yigit Tas","tase18@itu.edu.tr",null,"150180086"]]
 @api_auth
 def endpoint(Number):
     connection = mysql.connector.connect(
@@ -109,7 +109,7 @@ def endpoint(Number):
     result = cursor.fetchall()
     return result
 
-@application.route('/api/chapter/<int:Number>', methods=['GET'])
+@application.route('/api/chapter/<int:Number>', methods=['GET']) # /api/chapter/1 GET attığın zaman sana chapterın bilgilerini döndürür [[2,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
 @api_auth
 def chapter(Number):
     connection = mysql.connector.connect(
@@ -139,7 +139,7 @@ def events():
     result = cursor.fetchall()
     return result
 
-@application.route('/api/events/<int:Number>', methods=['GET'])
+@application.route('/api/events/<int:Number>', methods=['GET']) # /api/events/1 GET attığın zaman sana eventın bilgilerini döndürür [[1,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
 @api_auth
 def event(Number):
     connection = mysql.connector.connect(
@@ -169,7 +169,7 @@ def highlighted():
     result = cursor.fetchall()
     return result
 
-@application.route('/api/activemembers/<int:Number>', methods=['GET'])
+@application.route('/api/activechapters/<int:Number>', methods=['GET'])  # number = studentnumber
 def activemembers(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -190,7 +190,7 @@ def activemembers(Number):
         result[i] = cursor.fetchone()
     return result
 
-@application.route('/api/event/participated/<int:Number>', methods=['GET'])
+@application.route('/api/event/participated/<int:Number>', methods=['GET']) # number = studentnumber
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -215,7 +215,7 @@ def participated(Number):
 def chapteradmin():
     return render_template('chapteradmin.html')
 
-@application.route('/api/createevent', methods=['POST'])
+@application.route('/api/createevent', methods=['POST']) 
 @api_auth
 def createevent():
     connection = mysql.connector.connect(
@@ -232,7 +232,6 @@ def createevent():
     return jsonify("Event Created")
 
 @application.route('/api/edit-event-description', methods=['POST'])
-
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
