@@ -62,10 +62,10 @@ def register():
     cursor = connection.cursor()
     cursor.execute(query)
     connection.commit()
+    return jsonify("Registered")
 
 
 @application.route('/api/event/join', methods=['POST'])
-@api_auth
 def join():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -81,6 +81,7 @@ def join():
     query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{result[0]}, {content['eventid']});"
     cursor.execute(query)
     connection.commit()
+    return jsonify("Joined")
 
 @application.route('/api/profile/<int:Number>', methods=['GET'])
 @api_auth
