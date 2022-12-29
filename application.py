@@ -42,7 +42,7 @@ def api_auth(func):
 def home():
     return render_template('home.html')
 
-@application.route('/api/register' , methods=['POST'])
+@application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
 @api_auth
 def register():
     connection = mysql.connector.connect(
@@ -65,7 +65,7 @@ def register():
     return jsonify("Registered")
 
 
-@application.route('/api/event/join', methods=['POST'])
+@application.route('/api/event/join', methods=['POST']) # eventid, studentnumber vermen gerekiyor join
 @api_auth
 def join():
     connection = mysql.connector.connect(
@@ -86,15 +86,15 @@ def join():
     result = cursor.fetchall()
 
     if len(result) > 0:
-        return jsonify("Already joined")
+        return "Already joined"
     else:
         query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{resultid[0]}, {content['eventid']});"
         cursor.execute(query)
         connection.commit()
-        return jsonify("Joined")
+        return "Joined"
     
 
-@application.route('/api/profile/<int:Number>', methods=['GET'])
+@application.route('/api/profile/<int:Number>', methods=['GET']) # /api/profile/150180086 GET attığın zaman sana userın bilgilerini döndürür [[6,"Efe Yigit Tas","tase18@itu.edu.tr",null,"150180086"]]
 @api_auth
 def endpoint(Number):
     connection = mysql.connector.connect(
@@ -109,7 +109,7 @@ def endpoint(Number):
     result = cursor.fetchall()
     return result
 
-@application.route('/api/chapter/<int:Number>', methods=['GET'])
+@application.route('/api/chapter/<int:Number>', methods=['GET']) # /api/chapter/1 GET attığın zaman sana chapterın bilgilerini döndürür [[2,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
 @api_auth
 def chapter(Number):
     connection = mysql.connector.connect(
@@ -139,6 +139,21 @@ def events():
     result = cursor.fetchall()
     return result
 
+@application.route('/api/events/<int:Number>', methods=['GET']) # /api/events/1 GET attığın zaman sana eventın bilgilerini döndürür [[1,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
+@api_auth
+def event(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT * FROM event WHERE id = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 @application.route('/api/events/highlighted'  , methods=['GET'])
 @api_auth
 def highlighted():
@@ -154,8 +169,28 @@ def highlighted():
     result = cursor.fetchall()
     return result
 
-@application.route('/api/event/participated/<int:Number>', methods=['GET'])
-@api_auth
+@application.route('/api/activechapters/<int:Number>', methods=['GET'])  # number = studentnumber
+def activemembers(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"SELECT * FROM active WHERE user_id = {result[0]} and status = 1;"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for i in range(len(result)):
+        query = f"SELECT name FROM chapter WHERE id = {result[i][1]};"
+        cursor.execute(query)
+        result[i] = cursor.fetchone()
+    return result
+
+@application.route('/api/event/participated/<int:Number>', methods=['GET']) # number = studentnumber
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -172,6 +207,23 @@ def participated(Number):
     result = cursor.fetchall()
     return result
 
+@application.route('/api/event/applied/<int:Number>', methods=['GET']) # number = studentnumber
+def applied(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 
 
 
@@ -180,7 +232,7 @@ def participated(Number):
 def chapteradmin():
     return render_template('chapteradmin.html')
 
-@application.route('/api/createevent', methods=['POST'])
+@application.route('/api/createevent', methods=['POST']) 
 @api_auth
 def createevent():
     connection = mysql.connector.connect(
@@ -197,7 +249,6 @@ def createevent():
     return jsonify("Event Created")
 
 @application.route('/api/edit-event-description', methods=['POST'])
-
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
