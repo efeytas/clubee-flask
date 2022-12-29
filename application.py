@@ -139,6 +139,21 @@ def events():
     result = cursor.fetchall()
     return result
 
+@application.route('/api/events/<int:Number>', methods=['GET'])
+@api_auth
+def event(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT * FROM event WHERE id = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 @application.route('/api/events/highlighted'  , methods=['GET'])
 @api_auth
 def highlighted():
@@ -154,8 +169,24 @@ def highlighted():
     result = cursor.fetchall()
     return result
 
+@application.route('/api/activemembers/<int:Number>', methods=['GET'])
+def activemembers(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"SELECT * FROM active WHERE user_id = {result[0]};"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 @application.route('/api/event/participated/<int:Number>', methods=['GET'])
-@api_auth
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
