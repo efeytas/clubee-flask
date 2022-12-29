@@ -219,7 +219,7 @@ def applied(Number):
     cursor = connection.cursor()
     cursor.execute(query)
     result = cursor.fetchone()
-    query = f"SELECT id FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
+    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
     cursor.execute(query)
     result = cursor.fetchall()
     return result
