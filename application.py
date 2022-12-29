@@ -76,11 +76,21 @@ def join():
     query = f"SELECT id FROM users WHERE studentnumber = {content['studentnumber']};"
     cursor = connection.cursor()
     cursor.execute(query)
-    result = cursor.fetchone()
-    query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{result[0]}, {content['eventid']});"
+    resultid = cursor.fetchone()
+
+    query = f"SELECT * FROM attendance WHERE user_id = {resultid[0]} AND event_id = {content['eventid']};"
+    cursor = connection.cursor()
     cursor.execute(query)
-    connection.commit()
-    return jsonify("Joined")
+    result = cursor.fetchall()
+
+    if len(result) > 0:
+        return jsonify("Already joined")
+    else:
+        query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{resultid[0]}, {content['eventid']});"
+        cursor.execute(query)
+        connection.commit()
+        return jsonify("Joined")
+    
 
 @application.route('/api/profile/<int:Number>', methods=['GET'])
 def endpoint(Number):
@@ -150,7 +160,7 @@ def participated(Number):
     cursor = connection.cursor()
     cursor.execute(query)
     result = cursor.fetchone()
-    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
+    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]} AND status = 1);"
     cursor.execute(query)
     result = cursor.fetchall()
     return result
