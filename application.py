@@ -208,7 +208,7 @@ def participated(Number):
     return result
 
 @application.route('/api/event/applied/<int:Number>', methods=['GET']) # number = studentnumber
-def participated(Number):
+def applied(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
         user = "admin",
