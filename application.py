@@ -207,6 +207,23 @@ def participated(Number):
     result = cursor.fetchall()
     return result
 
+@application.route('/api/event/applied/<int:Number>', methods=['GET']) # number = studentnumber
+def participated(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 
 
 
