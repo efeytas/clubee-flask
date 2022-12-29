@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chapter Profile | ClubBee </title> 
+  <title>Add Active Member | ClubBee</title>
 
   <!-- Tailwind is included -->
   <link rel="stylesheet" href="css/main.css?v=1652870200386">
@@ -65,80 +65,88 @@
 </nav>
 
 <aside class="aside is-placed-left is-expanded">
-  <div class="aside-tools">
-    <div>
-      Club<b class="font-black">Bee</b>
+    <div class="aside-tools">
+      <div>
+        Club<b class="font-black">Bee</b>
+      </div>
     </div>
-  </div>
-  <div class="menu is-menu-main">
-    
-    <ul class="menu-list">
-      <li class="active">
-        <a href="home.html">
-          <span class="icon"><i class="mdi mdi-home"></i></span>
-          <span class="menu-item-label">Home</span>
-        </a>
-      </li>
-      <li class="active">
-        <a href="events.html">
-          <span class="icon"><i class="mdi mdi-table"></i></span>
-          <span class="menu-item-label">Events</span>
-        </a>
-      </li>
-      <li class="active">
-        <a href="active_members.html">
-          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-          <span class="menu-item-label">Active Members</span>
-        </a>
-      </li>
-      <li class="active">
-        <a href="chapterprofile.html">
-          <span class="icon"><i class="mdi mdi-book"></i></span>
-          <span class="menu-item-label">Chapter Profile</span>
-        </a>
-      </li>
-      <li class="active"> 
-        <a href="login.html">
-          <span class="icon"><i class="mdi mdi-logout-variant"></i></span>
-          <span class="menu-item-label">Log out</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</aside>
-
-
+    <div class="menu is-menu-main">
+      
+      <ul class="menu-list">
+        <li class="active">
+          <a href="home.html">
+            <span class="icon"><i class="mdi mdi-home"></i></span>
+            <span class="menu-item-label">Home</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="events.html">
+            <span class="icon"><i class="mdi mdi-table"></i></span>
+            <span class="menu-item-label">Events</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="active_members.html">
+            <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+            <span class="menu-item-label">Active Members</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="chapterprofile.html">
+            <span class="icon"><i class="mdi mdi-book"></i></span>
+            <span class="menu-item-label">Chapter Profile</span>
+          </a>
+        </li>
+        <li class="active"> 
+          <a href="login.html">
+            <span class="icon"><i class="mdi mdi-logout-variant"></i></span>
+            <span class="menu-item-label">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
 
 <section class="is-title-bar">
-  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-    <ul>
-      <li>Admin</li>
-      <li>Chapter Profile</li>
-    </ul>
-  </div>
-</section>
-<section class="section main-section">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+      <ul>
+        <li>Admin</li>
+        <li>Add Active Member</li>
+      </ul>
+    </div>
+  </section>
+  <section class="section main-section">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
             <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            Edit Chapter Description
+            Add Active Member
           </p>
         </header>
         <div class="card-content">
           <form action="" method="post">
             <div class="field">
-              <label class="label">Description</label>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <input type="text" autocomplete="on" name={{chapter.description}} value={{chapter.description}} class="input" required>
+                <label class="label">Name</label>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input type="text" autocomplete="on" name={{name}} value={{name}} class="input" required>
+                    </div>
                   </div>
-                  <p class="help">Required. Description</p>
                 </div>
               </div>
-            </div>
+            <hr>
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input type="text" autocomplete="on" name={{student_id}} value={{student_id}} class="input" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
             <hr>
             <div class="field">
               <div class="control">
@@ -150,39 +158,22 @@
           </form>
         </div>
       </div>
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-account"></i></span>
-            Profile
-          </p>
-        </header>
-        <div class="card-content">
-          <div class="field">
-            <label class="label">Chapter Name</label>
-            <div class="control">
-              <input type="text" readonly value={{chapter.name}} class="input is-static">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <footer>
-  </footer>
-  <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '658339141622648');
-      fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
-  </body>
-  </html>
+
+<footer>
+</footer>
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '658339141622648');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+</body>
+</html>

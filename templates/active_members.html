@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chapter Profile | ClubBee </title> 
+  <title>Active Members | ClubBee</title>
 
   <!-- Tailwind is included -->
   <link rel="stylesheet" href="css/main.css?v=1652870200386">
@@ -64,6 +64,7 @@
   </div>
 </nav>
 
+
 <aside class="aside is-placed-left is-expanded">
   <div class="aside-tools">
     <div>
@@ -107,82 +108,79 @@
   </div>
 </aside>
 
-
-
 <section class="is-title-bar">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+      <ul>
+        <li>Admin</li>
+        <li>Active Members</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section class="is-hero-bar">
   <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-    <ul>
-      <li>Admin</li>
-      <li>Chapter Profile</li>
-    </ul>
+    <h1 class="title">
+      Active Members
+    </h1>
+    <a href="add_activemember.html" >
+      <button class="button light">Add Active Member</button>
+  </a>
   </div>
 </section>
-<section class="section main-section">
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            Edit Chapter Description
-          </p>
-        </header>
-        <div class="card-content">
-          <form action="" method="post">
-            <div class="field">
-              <label class="label">Description</label>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <input type="text" autocomplete="on" name={{chapter.description}} value={{chapter.description}} class="input" required>
-                  </div>
-                  <p class="help">Required. Description</p>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <div class="field">
-              <div class="control">
-                <button type="submit" class="button green">
-                  Submit
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-account"></i></span>
-            Profile
-          </p>
-        </header>
-        <div class="card-content">
-          <div class="field">
-            <label class="label">Chapter Name</label>
-            <div class="control">
-              <input type="text" readonly value={{chapter.name}} class="input is-static">
-            </div>
-          </div>
-        </div>
+  <section class="section main-section">
+    <div class="card has-table">
+      <div class="card-content">
+        <table>
+          <thead>
+          <tr>
+           <th>Name</th>
+            <th>Student Id</th>
+            
+            
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+             {% for user in users %} <!--NE YAZICAM -->
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{student_id}}</td>
+                    
+                    <td class="actions-cell">
+                        <div class="buttons right nowrap">
+                            <a href="edit_member.html" class="button small blue">
+                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
+                            </a>
+                        </div>
+                      </td>
+                </tr>
+                {% endfor %}
+          </tbody>
+        </table>
+        
       </div>
     </div>
   </section>
+
   <footer>
-  </footer>
-  <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '658339141622648');
-      fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
-  </body>
-  </html>
+</footer>
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '658339141622648');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+</body>
+</html>
+
+
+
+

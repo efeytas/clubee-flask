@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Events | ClubBee</title>
+  <title>Edit Members | ClubBee</title>
 
   <!-- Tailwind is included -->
   <link rel="stylesheet" href="css/main.css?v=1652870200386">
@@ -63,7 +63,6 @@
     </div>
   </div>
 </nav>
-
 <aside class="aside is-placed-left is-expanded">
     <div class="aside-tools">
       <div>
@@ -106,69 +105,106 @@
       </ul>
     </div>
   </aside>
-
-
-
+  
 <section class="is-title-bar">
+
+
     <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-      <ul>
-        <li>Admin</li>
-        <li>Events</li>
-      </ul>
-    </div>
-  </section>
-  <section class="is-hero-bar">
-    <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-      <h1 class="title">
-        Events
-      </h1>
-      <a href="add_event.html" >
-        <button class="button light">Add Event</button>
-    </a>
-    </div>
-  </section>
+        <ul>
+          <li>Admin</li>
+          <li>Edit Active Members</li>
+        </ul>
+      </div>
+    
+  
+</section>
+
+
+<!---  </section>
   <section class="section main-section">
-    <div class="card has-table">
-      <div class="card-content">
-        <table>
-          <thead>
-          <tr>
-           <th>Name</th>
-            <th>Description</th>
-            <th>Highlighted</th>
-            <th>Event Date</th>
-            <th>Event Status</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-             {% for event in events %}
-                <tr>
-                  
-                    <td>{{event.name}}</td>
-                    <td>{{event.description}}</td>
-                    <td>{{event.highlighted}}</td>
-                    <td>{{event.event_date}}
-                    </td>
-                    <td>{{event.status}}</td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <a href="edit_event.html" class="button small blue">
-                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
-                            </a>
-                        </div>
-                      </td>
-                </tr>
-                {% endfor %}
-          </tbody>
-        </table>
-        
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
+            Edit Event
+          </p>
+        </header>
+        <div class="card-content">
+          <form action="" method="post">
+            <div class="field">
+                <label class="label">Event Status</label>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input type="text" autocomplete="on" name={{eventstatus}} value={{eventstatus}} class="input" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <hr>
+            <div class="field">
+                <label class="label">Highlighted</label>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input type="text" autocomplete="on" name={{highlighted}} value={{highlighted}} class="input" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <hr>
+            <div class="field">
+              <div class="control">
+                <button type="submit" class="button green">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-account"></i></span>
+            Event
+          </p>
+        </header>
+        <div class="card-content">
+          <div class="field">
+            <label class="label">Event Name</label>
+            <div class="control">
+              <input type="text" readonly value={{name}} class="input is-static">
+            </div>
+          </div>
+        </div>
+        <div class="card-content">
+            <div class="field">
+              <label class="label">Event Date</label>
+              <div class="control">
+                <input type="text" readonly value={{date}} class="input is-static">
+              </div>
+            </div>
+            <div class="card-content">
+                <div class="field">
+                  <label class="label">Event Place</label>
+                  <div class="control">
+                    <input type="text" readonly value={{place}} class="input is-static">
+                  </div>
+                </div>
+              </div>
+          </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
 
-  <footer>
+
+
+
+
+<footer>
 </footer>
 <script>
     !function(f,b,e,v,n,t,s)
@@ -186,8 +222,3 @@
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 </body>
 </html>
-
-
-
-
-
