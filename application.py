@@ -242,8 +242,8 @@ def editeventstatus():
     connection.commit()
     return jsonify("Event Status Updated")
 
-@application.route('/api/update-attendance-status', methods=['POST'])
-def updateattendancestatus():
+@application.route('/api/update-attendance/<int:Number>', methods=['POST'])
+def updateattendancestatus(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
         user = "admin",
@@ -251,8 +251,11 @@ def updateattendancestatus():
         database = "clubeedb"
     )
     content = request.json
-    query = f"UPDATE attendance SET status = {content['status']} WHERE event_id = {content['event_id']} AND user_id = {content['user_id']};"
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
     cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"UPDATE attendance SET status = {content['status']} WHERE event_id = {content['event_id']} AND user_id = {result[0]};"
     cursor.execute(query)
     connection.commit()
     return jsonify("Attendance Status Updated")
