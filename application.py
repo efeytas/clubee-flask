@@ -185,7 +185,7 @@ def activemembers(Number):
     cursor.execute(query)
     result = cursor.fetchall()
     for i in range(len(result)):
-        query = f"SELECT * FROM chapter WHERE id = {result[i][1]};"
+        query = f"SELECT name FROM chapter WHERE id = {result[i][1]};"
         cursor.execute(query)
         result[i] = cursor.fetchone()
     return result
