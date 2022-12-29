@@ -43,6 +43,7 @@ def home():
     return render_template('home.html')
 
 @application.route('/api/register' , methods=['POST'])
+@api_auth
 def register():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -65,6 +66,7 @@ def register():
 
 
 @application.route('/api/event/join', methods=['POST'])
+@api_auth
 def join():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -93,6 +95,7 @@ def join():
     
 
 @application.route('/api/profile/<int:Number>', methods=['GET'])
+@api_auth
 def endpoint(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -107,6 +110,7 @@ def endpoint(Number):
     return result
 
 @application.route('/api/chapter/<int:Number>', methods=['GET'])
+@api_auth
 def chapter(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -121,6 +125,7 @@ def chapter(Number):
     return result
 
 @application.route('/api/events/all', methods=['GET'])
+@api_auth
 def events():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -135,6 +140,7 @@ def events():
     return result
 
 @application.route('/api/events/highlighted'  , methods=['GET'])
+@api_auth
 def highlighted():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -149,6 +155,7 @@ def highlighted():
     return result
 
 @application.route('/api/event/participated/<int:Number>', methods=['GET'])
+@api_auth
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -169,10 +176,12 @@ def participated(Number):
 
 
 @application.route('/chapteradmin', methods=['GET'])
+@api_auth
 def chapteradmin():
     return render_template('chapteradmin.html')
 
 @application.route('/api/createevent', methods=['POST'])
+@api_auth
 def createevent():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -188,6 +197,7 @@ def createevent():
     return jsonify("Event Created")
 
 @application.route('/api/edit-event-description', methods=['POST'])
+
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
