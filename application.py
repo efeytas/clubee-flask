@@ -216,6 +216,22 @@ def highlightevent():
     connection.commit()
     return jsonify("Event Highlighted")
 
+@application.route('/api/edit-event-status', methods=['POST'])
+@api_auth
+def editeventstatus():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"UPDATE event SET eventstatus = {content['eventstatus']} WHERE id = {content['event_id']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Event Status Updated")
+
 @application.route('/api/update-chapter-description', methods=['POST'])
 @api_auth
 def updatechapterdescription():
@@ -231,6 +247,8 @@ def updatechapterdescription():
     cursor.execute(query)
     connection.commit()
     return jsonify("Chapter Description Updated")
+
+
 
 if __name__ == "__main__":
     application.run()
