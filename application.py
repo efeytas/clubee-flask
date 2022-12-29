@@ -181,9 +181,13 @@ def activemembers(Number):
     cursor = connection.cursor()
     cursor.execute(query)
     result = cursor.fetchone()
-    query = f"SELECT * FROM active WHERE user_id = {result[0]};"
+    query = f"SELECT * FROM active WHERE user_id = {result[0]} and status = 1;"
     cursor.execute(query)
     result = cursor.fetchall()
+    for i in range(len(result)):
+        query = f"SELECT * FROM chapter WHERE id = {result[i][1]};"
+        cursor.execute(query)
+        result[i] = cursor.fetchone()
     return result
 
 @application.route('/api/event/participated/<int:Number>', methods=['GET'])
