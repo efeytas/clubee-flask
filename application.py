@@ -132,7 +132,7 @@ def highlighted():
         password = "admin123",
         database = "clubeedb"
     )
-    query = f"SELECT * FROM event WHERE highlighted = 1;"
+    query = f"SELECT * FROM event WHERE highlighted = 1 AND eventstatus = 1;"
     cursor = connection.cursor()
     cursor.execute(query)
     result = cursor.fetchall()
