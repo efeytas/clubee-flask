@@ -8,7 +8,8 @@
 
   <!-- Tailwind is included -->
   <link rel="stylesheet" href="css/main.css?v=1652870200386">
-
+  <script type="text/javascript" src="{{url_for('static',filename='./script/script.js')}}"></script>
+  <link rel="stylesheet"  type="text/css" href="{{url_for('static',filename='./styles/main.css')}}">
   <link rel="apple-touch-icon" sizes="180x180" href="img/ClubBee.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="img/ClubBee.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="img/ClubBee.png"/>
@@ -31,7 +32,7 @@
   <meta property="twitter:image:src" content="https://justboil.me/images/one-tailwind/repository-preview-hi-res.png">
   <meta property="twitter:image:width" content="1920">
   <meta property="twitter:image:height" content="960">
-
+  {% include 'navbar.html' %}
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"></script>
   <script>
@@ -42,71 +43,9 @@
   </script>
 
 </head>
-<body>
+<body onLoad="viewAllEvents()">
 
 <div id="app">
-
-<nav id="navbar-main" class="navbar is-fixed-top">
-  <div class="navbar-menu" id="navbar-menu">
-    <div class="navbar-end">
-      
-      <div class="navbar-item dropdown has-divider has-user-avatar">
-        <a href="chapteradmin.html" class="navbar-link">
-          <span class="icon"><i class="mdi mdi-account"></i></span>          
-          <div class="is-user-name"><span></span></div>
-        </a>
-      </div>
-      <a href="login.html" title="Log out" class="navbar-item desktop-icon-only">
-        <span class="icon"><i class="mdi mdi-logout"></i></span>
-        <span>Log out</span>
-      </a>
-    </div>
-  </div>
-</nav>
-
-<aside class="aside is-placed-left is-expanded">
-    <div class="aside-tools">
-      <div>
-        Club<b class="font-black">Bee</b>
-      </div>
-    </div>
-    <div class="menu is-menu-main">
-      
-      <ul class="menu-list">
-        <li class="active">
-          <a href="home.html">
-            <span class="icon"><i class="mdi mdi-home"></i></span>
-            <span class="menu-item-label">Home</span>
-          </a>
-        </li>
-        <li class="active">
-          <a href="events.html">
-            <span class="icon"><i class="mdi mdi-table"></i></span>
-            <span class="menu-item-label">Events</span>
-          </a>
-        </li>
-        <li class="active">
-          <a href="active_members.html">
-            <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-            <span class="menu-item-label">Active Members</span>
-          </a>
-        </li>
-        <li class="active">
-          <a href="chapterprofile.html">
-            <span class="icon"><i class="mdi mdi-book"></i></span>
-            <span class="menu-item-label">Chapter Profile</span>
-          </a>
-        </li>
-        <li class="active"> 
-          <a href="login.html">
-            <span class="icon"><i class="mdi mdi-logout-variant"></i></span>
-            <span class="menu-item-label">Log out</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </aside>
-
 
 
 <section class="is-title-bar">
@@ -122,7 +61,7 @@
       <h1 class="title">
         Events
       </h1>
-      <a href="add_event.html" >
+      <a href="{{url_for('admin_add_events')}}" >
         <button class="button light">Add Event</button>
     </a>
     </div>
@@ -133,33 +72,19 @@
         <table>
           <thead>
           <tr>
+
            <th>Name</th>
             <th>Description</th>
             <th>Highlighted</th>
             <th>Event Date</th>
             <th>Event Status</th>
             <th></th>
+            <th></th>
+            <th></th>
           </tr>
           </thead>
-          <tbody>
-             {% for event in events %}
-                <tr>
-                  
-                    <td>{{event.name}}</td>
-                    <td>{{event.description}}</td>
-                    <td>{{event.highlighted}}</td>
-                    <td>{{event.event_date}}
-                    </td>
-                    <td>{{event.status}}</td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <a href="edit_event.html" class="button small blue">
-                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
-                            </a>
-                        </div>
-                      </td>
-                </tr>
-                {% endfor %}
+          <tbody id="output_tr">
+
           </tbody>
         </table>
         

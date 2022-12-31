@@ -42,6 +42,7 @@ def api_auth(func):
 def home():
     return render_template('home.html')
 
+
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
 @api_auth
 def register():
@@ -225,6 +226,7 @@ def createevent():
         database = "clubeedb"
     )
     content = request.json
+    print(content)
     query = f"INSERT INTO event (name,description,event_date,photolink,eventstatus,highlighted,chapter_id) VALUES ('{content['name']}', '{content['description']}','{content['event_date']}','{content['photolink']}',{content['eventstatus']}, {content['highlighted']},{content['chapter_id']});"
     cursor = connection.cursor()
     cursor.execute(query)
@@ -305,6 +307,29 @@ def updatechapterdescription():
     cursor.execute(query)
     connection.commit()
     return jsonify("Chapter Description Updated")
+
+#admin page icin sayfa 
+
+@application.route('/admin/events' , methods=['GET','POST'])
+def admin_events():
+    return render_template('events.html')
+
+@application.route('/admin/chapterprofile')
+def admin_chapter_profile():
+    return render_template('chapterprofile.html')
+
+@application.route('/admin/activemembers')
+def admin_active_members():
+    return render_template('active_members.html')
+
+@application.route('/admin/adminprofile')
+def admin_admin_profile():
+    return render_template('chapteradmin.html')
+
+@application.route('/admin/events/addevents',methods=['POST', 'GET'])
+def admin_add_events():
+    
+    return render_template('add_event.html')
 
 
 

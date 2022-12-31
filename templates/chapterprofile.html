@@ -8,7 +8,7 @@
 
   <!-- Tailwind is included -->
   <link rel="stylesheet" href="css/main.css?v=1652870200386">
-
+  <link rel="stylesheet"  type="text/css" href="{{url_for('static',filename='./styles/main.css')}}">
   <link rel="apple-touch-icon" sizes="180x180" href="img/ClubBee.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="img/ClubBee.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="img/ClubBee.png"/>
@@ -43,71 +43,8 @@
 
 </head>
 <body>
-
+  {% include 'navbar.html' %}
 <div id="app">
-
-<nav id="navbar-main" class="navbar is-fixed-top">
-  <div class="navbar-menu" id="navbar-menu">
-    <div class="navbar-end">
-      
-      <div class="navbar-item dropdown has-divider has-user-avatar">
-        <a href="chapteradmin.html" class="navbar-link">
-          <span class="icon"><i class="mdi mdi-account"></i></span>          
-          <div class="is-user-name"><span></span></div>
-        </a>
-      </div>
-      <a href="login.html" title="Log out" class="navbar-item desktop-icon-only">
-        <span class="icon"><i class="mdi mdi-logout"></i></span>
-        <span>Log out</span>
-      </a>
-    </div>
-  </div>
-</nav>
-
-<aside class="aside is-placed-left is-expanded">
-  <div class="aside-tools">
-    <div>
-      Club<b class="font-black">Bee</b>
-    </div>
-  </div>
-  <div class="menu is-menu-main">
-    
-    <ul class="menu-list">
-      <li class="active">
-        <a href="home.html">
-          <span class="icon"><i class="mdi mdi-home"></i></span>
-          <span class="menu-item-label">Home</span>
-        </a>
-      </li>
-      <li class="active">
-        <a href="events.html">
-          <span class="icon"><i class="mdi mdi-table"></i></span>
-          <span class="menu-item-label">Events</span>
-        </a>
-      </li>
-      <li class="active">
-        <a href="active_members.html">
-          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-          <span class="menu-item-label">Active Members</span>
-        </a>
-      </li>
-      <li class="active">
-        <a href="chapterprofile.html">
-          <span class="icon"><i class="mdi mdi-book"></i></span>
-          <span class="menu-item-label">Chapter Profile</span>
-        </a>
-      </li>
-      <li class="active"> 
-        <a href="login.html">
-          <span class="icon"><i class="mdi mdi-logout-variant"></i></span>
-          <span class="menu-item-label">Log out</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</aside>
-
-
 
 <section class="is-title-bar">
   <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
@@ -133,7 +70,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input type="text" autocomplete="on" name={{chapter.description}} value={{chapter.description}} class="input" required>
+                    <input type="text" autocomplete="on" class="input" required>
                   </div>
                   <p class="help">Required. Description</p>
                 </div>
@@ -161,7 +98,7 @@
           <div class="field">
             <label class="label">Chapter Name</label>
             <div class="control">
-              <input type="text" readonly value={{chapter.name}} class="input is-static">
+              <input type="text" >
             </div>
           </div>
         </div>

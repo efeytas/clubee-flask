@@ -1,0 +1,61 @@
+    <nav id="navbar-main" class="navbar is-fixed-top">
+      <div class="navbar-menu" id="navbar-menu">
+        <div class="navbar-end">
+          
+          <div class="navbar-item dropdown has-divider has-user-avatar">
+            <a href="{{url_for('admin_admin_profile')}}" class="navbar-link">
+              <span class="icon"><i class="mdi mdi-account"></i></span>          
+              <div class="is-user-name"><span></span></div>
+            </a>
+          </div>
+          <a href="" title="Log out" class="navbar-item desktop-icon-only">
+            <span class="icon"><i class="mdi mdi-logout"></i></span>
+            <span>Log out</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+    
+    <aside class="aside is-placed-left is-expanded">
+        <div class="aside-tools">
+          <div>
+            Club<b class="font-black">Bee</b>
+          </div>
+        </div>
+        <div class="menu is-menu-main">
+          
+          <ul class="menu-list">
+            <li class="active">
+              <a href="{{url_for('home')}}">
+                <span class="icon"><i class="mdi mdi-home"></i></span>
+                <span class="menu-item-label">Home</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="{{url_for('admin_events')}}">
+                <span class="icon"><i class="mdi mdi-table"></i></span>
+                <span class="menu-item-label">Events</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="{{url_for('admin_active_members')}}">
+                <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+                <span class="menu-item-label">Active Members</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="{{url_for('admin_chapter_profile')}}">
+                <span class="icon"><i class="mdi mdi-book"></i></span>
+                <span class="menu-item-label">Chapter Profile</span>
+              </a>
+            </li>
+            <li class="active"> 
+              <a href="login.html">
+                <span class="icon"><i class="mdi mdi-logout-variant"></i></span>
+                <span class="menu-item-label">Log out</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    
