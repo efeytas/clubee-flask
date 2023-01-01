@@ -42,7 +42,6 @@ def api_auth(func):
 def home():
     return render_template('home.html')
 
-
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
 @api_auth
 def register():
@@ -87,12 +86,12 @@ def join():
     result = cursor.fetchall()
 
     if len(result) > 0:
-        return jsonify("Already joined")
+        return "Already joined"
     else:
         query = f"INSERT INTO attendance (status,user_id, event_id) VALUES (0,{resultid[0]}, {content['eventid']});"
         cursor.execute(query)
         connection.commit()
-        return jsonify("Joined")
+        return "Joined"
     
 
 @application.route('/api/profile/<int:Number>', methods=['GET']) # /api/profile/150180086 GET attığın zaman sana userın bilgilerini döndürür [[6,"Efe Yigit Tas","tase18@itu.edu.tr",null,"150180086"]]
@@ -208,6 +207,23 @@ def participated(Number):
     result = cursor.fetchall()
     return result
 
+@application.route('/api/event/applied/<int:Number>', methods=['GET']) # number = studentnumber
+def applied(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"SELECT * FROM event WHERE id IN (SELECT event_id FROM attendance WHERE user_id = {result[0]});"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 
 
 
@@ -226,7 +242,6 @@ def createevent():
         database = "clubeedb"
     )
     content = request.json
-    print(content)
     query = f"INSERT INTO event (name,description,event_date,photolink,eventstatus,highlighted,chapter_id) VALUES ('{content['name']}', '{content['description']}','{content['event_date']}','{content['photolink']}',{content['eventstatus']}, {content['highlighted']},{content['chapter_id']});"
     cursor = connection.cursor()
     cursor.execute(query)
@@ -278,8 +293,8 @@ def editeventstatus():
     connection.commit()
     return jsonify("Event Status Updated")
 
-@application.route('/api/update-attendance-status', methods=['POST'])
-def updateattendancestatus():
+@application.route('/api/update-attendance/<int:Number>', methods=['POST'])
+def updateattendancestatus(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
         user = "admin",
@@ -287,8 +302,11 @@ def updateattendancestatus():
         database = "clubeedb"
     )
     content = request.json
-    query = f"UPDATE attendance SET status = {content['status']} WHERE event_id = {content['event_id']} AND user_id = {content['user_id']};"
+    query = f"SELECT id FROM users WHERE studentnumber = {Number};"
     cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    query = f"UPDATE attendance SET status = {content['status']} WHERE event_id = {content['event_id']} AND user_id = {result[0]};"
     cursor.execute(query)
     connection.commit()
     return jsonify("Attendance Status Updated")
