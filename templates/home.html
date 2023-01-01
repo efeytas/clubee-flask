@@ -43,7 +43,7 @@
    {% include 'navbar.html' %}
 </head>
 
-<body onLoad="viewEvents(); viewActiveMembers() ">
+<body onLoad="viewEvents() ">
 
 <div id="app">
 
@@ -77,22 +77,8 @@
             <th></th>
           </tr>
           </thead>
-          <tbody>
-                <tr>
-                  
-                    <td id="event-name"></td>
-                    <td id="description"></td>
-                    <td id="highlighted"></td>
-                    <td id="event-date"></td>
-                    <td id="event-status"></td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <a href="edit_event.html" class="button small blue">
-                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
-                            </a>
-                        </div>
-                      </td>
-                </tr>
+          <tbody id="output_tr">
+            
           </tbody>
         </table>
         

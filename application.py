@@ -328,7 +328,6 @@ def admin_admin_profile():
 
 @application.route('/admin/events/addevents',methods=['POST', 'GET'])
 def admin_add_events():
-    
     return render_template('add_event.html')
 
 
