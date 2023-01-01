@@ -170,6 +170,7 @@ def highlighted():
     return result
 
 @application.route('/api/activechapters/<int:Number>', methods=['GET'])  # number = studentnumber
+@api_auth
 def activemembers(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -191,6 +192,7 @@ def activemembers(Number):
     return result
 
 @application.route('/api/event/participated/<int:Number>', methods=['GET']) # number = studentnumber
+@api_auth
 def participated(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -223,8 +225,6 @@ def applied(Number):
     cursor.execute(query)
     result = cursor.fetchall()
     return result
-
-
 
 
 @application.route('/chapteradmin', methods=['GET'])
