@@ -15,7 +15,7 @@
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#00b4b6"/>
 
   <meta name="description" content="ClubBee Admin Panel">
-
+  <script type="text/javascript" src="{{url_for('static',filename='./script/script.js')}}"></script>
   <meta property="og:url" content="https://justboil.github.io/admin-one-tailwind/">
   <meta property="og:site_name" content="JustBoil.me">
   <meta property="og:title" content="Admin One HTML">
@@ -42,7 +42,7 @@
   </script>
 
 </head>
-<body>
+<body onLoad="viewChapterProfile()">
   {% include 'navbar.html' %}
 <div id="app">
 
@@ -59,18 +59,43 @@
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-account"></i></span>
+            Profile
+          </p>
+        </header>
+        <div class="card-content">
+          <div class="field">
+            <label class="label">Chapter ID</label>
+            <div class="control">
+              <h2 id="chapter_id"></h2>
+            </div>
+          <div class="field">
+            <label class="label">Chapter Name</label>
+            <div class="control">
+              <h2 id="data2"></h2>
+            </div>
+            <label class="label">Chapter Description</label>
+            <div class="control">
+              <h2 id="data1"></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
             <span class="icon"><i class="mdi mdi-account-circle"></i></span>
             Edit Chapter Description
           </p>
         </header>
         <div class="card-content">
-          <form action="" method="post">
+          <form method="post" id="myForm">
             <div class="field">
               <label class="label">Description</label>
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input type="text" autocomplete="on" class="input" required>
+                    <input type="text" autocomplete="on" name="description1" id="description1" class="input" required>
                   </div>
                   <p class="help">Required. Description</p>
                 </div>
@@ -79,28 +104,14 @@
             <hr>
             <div class="field">
               <div class="control">
+                <form method="post" id="myForm">
                 <button type="submit" class="button green">
                   Submit
                 </button>
+              </form>
               </div>
             </div>
           </form>
-        </div>
-      </div>
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-account"></i></span>
-            Profile
-          </p>
-        </header>
-        <div class="card-content">
-          <div class="field">
-            <label class="label">Chapter Name</label>
-            <div class="control">
-              <input type="text" >
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -108,17 +119,31 @@
   <footer>
   </footer>
   <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '658339141622648');
-      fbq('track', 'PageView');
-    </script>
+  function logSubmit(event){
+    event.preventDefault();
+
+    const formData =new FormData(form);
+    const description1=formData.get("description1");
+    const chapter_id=document.getElementById('chapter_id').innerHTML;
+    console.log(description1);
+    const data={
+      description: description1,
+      chapter_id: chapter_id,
+    }
+    console.log(data);
+    fetch('/api/update-chapter-description',{
+      method:'POST',
+      headers:{
+        "Content-Type": "application/json",
+        "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
+      },
+      body:JSON.stringify(data),
+    })
+  }
+  
+  const form=document.getElementById('myForm');
+  form.addEventListener('submit',logSubmit);
+</script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
   </body>

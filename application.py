@@ -42,6 +42,7 @@ def api_auth(func):
 def home():
     return render_template('home.html')
 
+#registration
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
 @api_auth
 def register():
@@ -64,7 +65,7 @@ def register():
     connection.commit()
     return jsonify("Registered")
 
-
+#join to event
 @application.route('/api/event/join', methods=['POST']) # eventid, studentnumber vermen gerekiyor join
 @api_auth
 def join():
@@ -93,7 +94,7 @@ def join():
         connection.commit()
         return "Joined"
     
-
+#view profile of student
 @application.route('/api/profile/<int:Number>', methods=['GET']) # /api/profile/150180086 GET attığın zaman sana userın bilgilerini döndürür [[6,"Efe Yigit Tas","tase18@itu.edu.tr",null,"150180086"]]
 @api_auth
 def endpoint(Number):
@@ -109,6 +110,7 @@ def endpoint(Number):
     result = cursor.fetchall()
     return result
 
+#view profile of chapter
 @application.route('/api/chapter/<int:Number>', methods=['GET']) # /api/chapter/1 GET attığın zaman sana chapterın bilgilerini döndürür [[2,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
 @api_auth
 def chapter(Number):
@@ -124,6 +126,7 @@ def chapter(Number):
     result = cursor.fetchall()
     return result
 
+#view all events (?)
 @application.route('/api/events/all', methods=['GET'])
 @api_auth
 def events():
@@ -139,6 +142,7 @@ def events():
     result = cursor.fetchall()
     return result
 
+#view events of specific club
 @application.route('/api/events/<int:Number>', methods=['GET']) # /api/events/1 GET attığın zaman sana eventın bilgilerini döndürür [[1,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
 @api_auth
 def event(Number):
@@ -154,6 +158,7 @@ def event(Number):
     result = cursor.fetchall()
     return result
 
+#view events highlighted
 @application.route('/api/events/highlighted'  , methods=['GET'])
 @api_auth
 def highlighted():
@@ -169,6 +174,7 @@ def highlighted():
     result = cursor.fetchall()
     return result
 
+#view active members of specific chapter
 @application.route('/api/activechapters/<int:Number>', methods=['GET'])  # number = studentnumber
 @api_auth
 def activemembers(Number):
@@ -191,6 +197,7 @@ def activemembers(Number):
         result[i] = cursor.fetchone()
     return result
 
+#view events partcicipated of specific user
 @application.route('/api/event/participated/<int:Number>', methods=['GET']) # number = studentnumber
 @api_auth
 def participated(Number):
@@ -209,6 +216,7 @@ def participated(Number):
     result = cursor.fetchall()
     return result
 
+#view events applied of specific user
 @application.route('/api/event/applied/<int:Number>', methods=['GET']) # number = studentnumber
 def applied(Number):
     connection = mysql.connector.connect(
@@ -227,11 +235,13 @@ def applied(Number):
     return result
 
 
+#HTML render for chapter admin 
 @application.route('/chapteradmin', methods=['GET'])
 @api_auth
 def chapteradmin():
     return render_template('chapteradmin.html')
 
+#create event
 @application.route('/api/createevent', methods=['POST']) 
 @api_auth
 def createevent():
@@ -248,6 +258,7 @@ def createevent():
     connection.commit()
     return jsonify("Event Created")
 
+#edit event description
 @application.route('/api/edit-event-description', methods=['POST'])
 def editchapterdescription():
     connection = mysql.connector.connect(
@@ -263,6 +274,8 @@ def editchapterdescription():
     connection.commit()
     return jsonify("Event Description Updated")
 
+
+#edit highlight event
 @application.route('/api/highlight-event', methods=['POST'])
 def highlightevent():
     connection = mysql.connector.connect(
@@ -278,6 +291,7 @@ def highlightevent():
     connection.commit()
     return jsonify("Event Highlighted")
 
+#edit status of event
 @application.route('/api/edit-event-status', methods=['POST'])
 def editeventstatus():
     connection = mysql.connector.connect(
@@ -293,6 +307,7 @@ def editeventstatus():
     connection.commit()
     return jsonify("Event Status Updated")
 
+#update attendance of user in chapter
 @application.route('/api/update-attendance/<int:Number>', methods=['POST'])
 def updateattendancestatus(Number):
     connection = mysql.connector.connect(
@@ -311,7 +326,10 @@ def updateattendancestatus(Number):
     connection.commit()
     return jsonify("Attendance Status Updated")
 
+#edit chapter description
+#editted
 @application.route('/api/update-chapter-description', methods=['POST'])
+@api_auth
 def updatechapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -320,6 +338,7 @@ def updatechapterdescription():
         database = "clubeedb"
     )
     content = request.json
+    print(content)
     query = f"UPDATE chapter SET description = '{content['description']}' WHERE id = {content['chapter_id']};"
     cursor = connection.cursor()
     cursor.execute(query)
@@ -332,7 +351,8 @@ def updatechapterdescription():
 def admin_events():
     return render_template('events.html')
 
-@application.route('/admin/chapterprofile')
+@application.route('/admin/chapterprofile',methods=['POST', 'GET'])
+
 def admin_chapter_profile():
     return render_template('chapterprofile.html')
 
@@ -348,6 +368,105 @@ def admin_admin_profile():
 def admin_add_events():
     return render_template('add_event.html')
 
+#new
+
+@application.route('/admin/chapter/addactivemember',methods=['POST', 'GET'])
+def admin_add_active_member():
+    return render_template('add_activemember.html')
+
+@application.route('/admin/chapter/editevent',methods=['POST', 'GET'])
+def admin_edit_event():
+    return render_template('edit_event.html')
+
+#yeni fonksiyonlar
+
+@application.route('/admin/activemembersinchapter/<int:Number>', methods=['GET'])  # number = studentnumber
+@api_auth
+def activemembersinchapter(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+
+    cursor = connection.cursor()
+    query = f"SELECT * FROM active WHERE chapter_id = {Number} and status = 1;"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for i in range(len(result)):
+        query = f"SELECT * FROM users WHERE id = {result[i][2]};"
+        cursor.execute(query)
+        result[i] = cursor.fetchone()
+    return result
+
+
+@application.route('/admin/adminofchapter/<int:Number>', methods=['GET'])  # number = studentnumber
+@api_auth
+def adminofchapter(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    cursor = connection.cursor()
+    query = f"SELECT * FROM chapter WHERE id = {Number};"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    query = f"SELECT * FROM users WHERE id = {result[0][4]};"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+
+@application.route('/admin/addactivemember/<int:Number>', methods=['POST']) 
+@api_auth
+def addactivemember(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query=f"SELECT id FROM users WHERE studentnumber = {content['studentnumber']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()
+    if len(result)==0:
+        return jsonify("Such student doesn't exist")
+    else:
+        query=f"SELECT chapter_id FROM active WHERE user_id = {result[0]};"
+        cursor.execute(query)
+        result1 = cursor.fetchone()
+        print("The result")
+        print(result1[0])
+        print(" ")
+        print(Number)
+        if result1[0]==Number:
+            return jsonify("Student already active member")
+        else:
+            query = f"INSERT INTO active (status,chapter_id ,user_id) VALUES (1,{Number}, {result[0]});"
+            cursor.execute(query)
+            connection.commit()
+            return jsonify("Student added")
+
+
+@application.route('/admin/events/<int:Number>', methods=['GET']) # /api/events/1 GET attığın zaman sana eventın bilgilerini döndürür [[1,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
+@api_auth
+def view_events_chapter(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT * FROM event WHERE chapter_id = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
 
 
 if __name__ == "__main__":

@@ -43,7 +43,7 @@
    {% include 'navbar.html' %}
 </head>
 
-<body onLoad="viewEvents() ">
+<body onLoad="viewEventsOfChapter(); viewActiveMembers()">
 
 <div id="app">
 
@@ -101,26 +101,10 @@
           <tr>
            <th>Name</th>
             <th>Student Id</th>
-            
-            
-            <th></th>
+            <th>E-mail</th>
           </tr>
           </thead>
-          <tbody>
-             {% for user in users %} <!--NE YAZICAM -->
-                <tr>
-                    <td>{{name}}</td>
-                    <td>{{student_id}}</td>
-                    
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <a href="edit_member.html" class="button small blue">
-                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
-                            </a>
-                        </div>
-                      </td>
-                </tr>
-                {% endfor %}
+          <tbody id="active_members">
           </tbody>
         </table>
         

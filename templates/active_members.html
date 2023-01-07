@@ -15,6 +15,7 @@
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#00b4b6"/>
 
   <meta name="description" content="ClubBee Admin Panel">
+  <script type="text/javascript" src="{{url_for('static',filename='./script/script.js')}}"></script>
 
   <meta property="og:url" content="https://justboil.github.io/admin-one-tailwind/">
   <meta property="og:site_name" content="JustBoil.me">
@@ -42,7 +43,7 @@
   </script>
 
 </head>
-<body>
+<body onLoad="viewActiveMembers()">
 
 <div id="app">
 
@@ -62,7 +63,7 @@
     <h1 class="title">
       Active Members
     </h1>
-    <a href="add_activemember.html" >
+    <a href="{{url_for('admin_add_active_member')}}" >
       <button class="button light">Add Active Member</button>
   </a>
   </div>
@@ -73,28 +74,13 @@
         <table>
           <thead>
           <tr>
-           <th>Name</th>
+            <th>Name</th>
             <th>Student Id</th>
+            <th>E-mail</th>
             
-            
-            <th></th>
           </tr>
           </thead>
-          <tbody>
-             {% for user in users %} <!--NE YAZICAM -->
-                <tr>
-                    <td>{{name}}</td>
-                    <td>{{student_id}}</td>
-                    
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <a href="edit_member.html" class="button small blue">
-                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
-                            </a>
-                        </div>
-                      </td>
-                </tr>
-                {% endfor %}
+          <tbody id="active_members">
           </tbody>
         </table>
         

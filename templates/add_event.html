@@ -195,52 +195,6 @@
 
   const form=document.getElementById('myForm');
   form.addEventListener('submit',logSubmit);
-
-
-
-
-
-
-
-  /*if(form){
-  console.log("Screen opened")
-  form.addEventListener('submit', function(){
-      
-      console.log("Event listened")
-//      const formData=new FormData(form);
-      const event_name=getElementById("name").value
-      const event_description=getElementById("description").value
-      const event_date=getElementById("event_date").value
-      const event_photolink=getElementById("photolink").value
-      const event_status=getElementById("eventstatus").value
-      const event_highlighted=getElementById("highlighted").value
-      const event_chapter_id=getElementById("chapter_id").value
-      fetch('/api/createevent',{
-        method: 'POST',
-        headers: {
-          //"Server" : "Werkzeug/2.2.2 Python/3.8.10",
-          //"Content-Length": data.length,
-          //"Content-Type": "application/json",
-          "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
-        },
-        body: JSON({
-          name: event_name,
-          description: event_description,
-          event_date: event_date,
-          photolink: event_photolink,
-          eventstatus: event_status,
-          highlighted: event_highlighted,
-           chapter_id: event_chapter_id}),
-  })
-        .then(response=>response.json())
-        .then(data=>console.log(data)
-        )
-        .catch((error) => {
-          console.error('There has been a problem with your fetch operation:', error);
-        });
-
-});
-  }*/
 </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">

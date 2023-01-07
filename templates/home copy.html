@@ -4,12 +4,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Add Active Member | ClubBee</title>
-
+  <title>Home | ClubBee</title>
   <!-- Tailwind is included -->
   <link rel="stylesheet" href="css/main.css?v=1652870200386">
+  <script type="text/javascript" src="{{url_for('static',filename='./script/script.js')}}"></script>
   <link rel="stylesheet"  type="text/css" href="{{url_for('static',filename='./styles/main.css')}}">
-
   <link rel="apple-touch-icon" sizes="180x180" href="img/ClubBee.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="img/ClubBee.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="img/ClubBee.png"/>
@@ -32,7 +31,7 @@
   <meta property="twitter:image:src" content="https://justboil.me/images/one-tailwind/repository-preview-hi-res.png">
   <meta property="twitter:image:width" content="1920">
   <meta property="twitter:image:height" content="960">
-  {% include 'navbar.html' %}
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"></script>
   <script>
@@ -41,10 +40,10 @@
     gtag('js', new Date());
     gtag('config', 'UA-130795909-1');
   </script>
-
+   {% include 'navbar.html' %}
 </head>
-<body>
 
+<body onLoad="viewEvents(); viewActiveMembers()">
 
 <div id="app">
 
@@ -52,71 +51,93 @@
     <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
       <ul>
         <li>Admin</li>
-        <li>Add Active Member</li>
+        <li>Home</li>
       </ul>
     </div>
   </section>
-  <section class="section main-section">
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            Add Active Member
-          </p>
-        </header>
-        <div class="card-content">
-          <form action="" method="post" id="myForm">
-            <div class="field">
-                <label class="label">Student Id</label>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <input type="text" autocomplete="on" name="student_id" id="student_id" class="input" required>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-            <div class="field">
-              <div class="control">
-                <button type="submit" class="button green">
-                  Submit
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+</section>
+<section class="section main-section">
+    <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+          Events
+        </p>
+      </header>
+    <div class="card has-table">
+      <div class="card-content">
+        <table>
+          <thead>
+          <tr>
+           <th>Name</th>
+            <th>Description</th>
+            <th>Highlighted</th>
+            <th>Event Date</th>
+            <th>Event Status</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody id="output_tr">
+            
+          </tbody>
+        </table>
+        
       </div>
-<footer></footer>
+    </div>
+  </section>
 
+</section>
+  <section class="section main-section">
+    <div class="card has-table">
+        <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+              Active Members
+            </p>
+          </header>
+      <div class="card-content">
+        <table>
+          <thead>
+          <tr>
+           <th>Name</th>
+            <th>Student Id</th>
+            <th>E-mail</th>
+          </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td id="student-name"></td>
+                    <td id="student-id"></td>
+                    <td id="student-email"></td>
+                    
+                    <td class="actions-cell">
+                        <div class="buttons right nowrap">
+                            <a href="edit_member.html" class="button small blue">
+                                <span class="icon"><i class="mdi mdi-pencil"></i></span>
+                            </a>
+                        </div>
+                      </td>
+                </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+  </section>
+
+  <footer>
+</footer>
 <script>
-  function logSubmit(event){
-    event.preventDefault();
-
-    const formData =new FormData(form);
-    const student_id=formData.get("student_id");
-
-    const data={
-      studentnumber: student_id,
-    }
-
-    console.log(data);
-    fetch('/admin/addactivemember/1',{
-      method:'POST',
-      headers:{
-        "Content-Type": "application/json",
-        "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
-      },
-      body:JSON.stringify(data),
-    })
-  }
-
-  const form=document.getElementById('myForm');
-  form.addEventListener('submit',logSubmit);
-
-
-
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '658339141622648');
+    fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">

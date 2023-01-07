@@ -15,7 +15,7 @@
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#00b4b6"/>
 
   <meta name="description" content="ClubBee Admin Panel">
-
+  <script type="text/javascript" src="{{url_for('static',filename='./script/script.js')}}"></script>
   <meta property="og:url" content="https://justboil.github.io/admin-one-tailwind/">
   <meta property="og:site_name" content="JustBoil.me">
   <meta property="og:title" content="Admin One HTML">
@@ -42,7 +42,7 @@
   </script>
 
 </head>
-<body>
+<body onLoad="viewAdminOfChapter()">
 
 <div id="app">
 
@@ -71,19 +71,19 @@
         <div class="field">
           <label class="label">Name</label>
           <div class="control">
-            <input type="text"  class="input is-static">
+            <h1 id="name"></h1>
           </div>
         </div>
         <hr>
         <div class="field">
           <label class="label">E-mail</label>
           <div class="control">
-            <input type="text"  class="input is-static">
+            <h1 id="e-mail"></h1>
             <hr>
             <div class="field">
-              <label class="label">Sudent Id</label>
+              <label class="label">Student Id</label>
               <div class="control">
-                <input type="text" class="input is-static">
+                <h1 id="studentnumber"></h1>
               </div>
             </div>
         
