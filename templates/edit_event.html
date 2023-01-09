@@ -44,7 +44,7 @@
   </script>
 
 </head>
-<body>
+<body onLoad="viewEventData()">
 
 <div id="app">
 
@@ -61,6 +61,38 @@
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-account"></i></span>
+            Event
+          </p>
+        </header>
+        <div class="card-content">
+          <div class="field">
+            <label class="label">Event Name</label>
+            <div class="control">
+              <h2 id="event_name"></h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-content">
+            <div class="field">
+              <label class="label">Event Date</label>
+              <div class="control">
+                <h2 id="event_date"></h2>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="field">
+              <label class="label">Event Description</label>
+              <div class="control">
+                <h2 id="event_description"></h2>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
             <span class="icon"><i class="mdi mdi-account-circle"></i></span>
             Edit Event
           </p>
@@ -69,12 +101,8 @@
           <form id="myForm" method="post">
             <div class="field">
                 <label class="label">Event Status</label>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <input type="text" autocomplete="on" name="eventstatus" value="eventstatusz" id="eventstatus" class="input" required>
-                    </div>
-                  </div>
+                <div class="control">
+                  <h2 id="event_status"></h2>
                 </div>
               </div>
             <hr>
@@ -83,7 +111,10 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <input type="text" autocomplete="on" name="highlighted" value="highlighted" id="highlighted" class="input" required>
+                      <h2 id="event_highlight"></h2>
+  
+                      <button id="btn" class="button green">Click me</button>
+  
                     </div>
                   </div>
                 </div>
@@ -99,57 +130,26 @@
           </form>
         </div>
       </div>
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-account"></i></span>
-            Event
-          </p>
-        </header>
-        <div class="card-content">
-          <div class="field">
-            <label class="label">Event Name</label>
-            <div class="control">
-              <input type="text" readonly value={{name}} class="input is-static">
-            </div>
-          </div>
-        </div>
-        <div class="card-content">
-            <div class="field">
-              <label class="label">Event Date</label>
-              <div class="control">
-                <input type="text" readonly value={{date}} class="input is-static">
-              </div>
-            </div>
-            <div class="card-content">
-                <div class="field">
-                  <label class="label">Event Place</label>
-                  <div class="control">
-                    <input type="text" readonly value={{place}} class="input is-static">
-                  </div>
-                </div>
-              </div>
-          </div>
-      </div>
     </div>
   </section>
 
   <footer>
 </footer>
 <script>
-   function logSubmit(event){
-    event.preventDefault();
 
-    const formData =new FormData(form);
-    const description1=formData.get("description1");
-    const chapter_id=document.getElementById('chapter_id').innerHTML;
-    console.log(description1);
-    const data={
-      description: description1,
-      chapter_id: chapter_id,
-    }
-    console.log(data);
-    fetch('/api/update-chapter-description',{
+
+  const btn = document.getElementById('btn');
+  const value=document.getElementById("event_highlight").innerHTML;
+  const event_id=document.getElementById("event_id");
+  console.log(value);
+  const data={
+    event_id:event_id,
+  }
+  btn.addEventListener('click', function handleClick() {
+  //btn.textContent = 'Button clicked';
+  if(value==1){
+
+    fetch('/api/unhighlight-event',{
       method:'POST',
       headers:{
         "Content-Type": "application/json",
@@ -158,9 +158,20 @@
       body:JSON.stringify(data),
     })
   }
-  
-  const form=document.getElementById('myForm');
-  form.addEventListener('submit',logSubmit);
+  else{
+    fetch('/api/highlight-event',{
+      method:'POST',
+      headers:{
+        "Content-Type": "application/json",
+        "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
+      },
+      body:JSON.stringify(data),
+    })
+  }
+  }
+
+);
+
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">

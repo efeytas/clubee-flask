@@ -374,7 +374,7 @@ def admin_add_events():
 def admin_add_active_member():
     return render_template('add_activemember.html')
 
-@application.route('/admin/chapter/editevent',methods=['POST', 'GET'])
+@application.route('/admin/chapter/editevent/',methods=['POST', 'GET'])
 def admin_edit_event():
     return render_template('edit_event.html')
 
@@ -467,6 +467,22 @@ def view_events_chapter(Number):
     cursor.execute(query)
     result = cursor.fetchall()
     return result
+
+#edit unhighlight event
+@application.route('/api/unhighlight-event', methods=['POST'])
+def unhighlightevent():
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    content = request.json
+    query = f"UPDATE event SET highlighted = 0 WHERE id = {content['event_id']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    return jsonify("Event Unhighlighted")
 
 
 if __name__ == "__main__":

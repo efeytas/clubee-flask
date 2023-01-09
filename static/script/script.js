@@ -46,17 +46,19 @@ function viewEventsOfChapter(){
         outputHTML+='<tr>';
         outputHTML+=`<td> ${data[i][1]} </td>`;
         outputHTML+=`<td> ${data[i][2]} </td>`;
-        outputHTML+=`<td> ${data[i][6]} <input type="checkbox" id="checkbox" onclick="sendData()"></td>`;
+        outputHTML+=`<td> ${data[i][6]} </td>`;
         outputHTML+=`<td> ${data[i][3]} </td>`;
         outputHTML+=`<td> ${data[i][5]} </td>`;
         outputHTML+=`<td class="actions-cell">
           <div class="buttons right nowrap">
-              <a href='/admin/chapter/editevent' class="button small blue">
+              <a href='/admin/chapter/editevent/?event_id=${data[i][0]}' class="button small blue">
                   <span class="icon"><i class="mdi mdi-pencil"></i></span>
               </a>
           </div>
         </td>`;
         outputHTML+='</tr>';
+        //document.getElementById("event_id").innerHTML=data[i][5];
+        //console.log(data[i][5]);
       }
       document.getElementById("output_tr").innerHTML=outputHTML;
     })
@@ -77,7 +79,7 @@ function sendData(){
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
+    const checkbox=document.getElementById("checkbox");
   });
 }
 
@@ -119,6 +121,29 @@ function viewChapterProfile(){
     document.getElementById("chapter_id").innerHTML=data2[0];
     document.getElementById("data1").innerHTML=data2[1];
     document.getElementById("data2").innerHTML=data2[2];
+
+
+  })
+}
+
+function viewEventData(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('event_id');
+  console.log(id); 
+
+  fetch('/api/events/'+id,{
+    headers:{"auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",},
+  })
+  .then(response=> response.json())
+  .then(data=> {
+
+    data2=data[0]
+    document.getElementById("event_name").innerHTML=data2[1];
+    document.getElementById("event_date").innerHTML=data2[3];
+    document.getElementById("event_description").innerHTML=data2[2];
+    document.getElementById("event_status").innerHTML=data2[5];
+    document.getElementById("event_highlight").innerHTML=data2[5];
+
 
 
   })
