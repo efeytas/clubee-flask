@@ -6,6 +6,8 @@ import functools
 with open('config.json') as config_file:
     data = json.load(config_file)
     api_key = data['api_key']
+
+is_logged = False
 """from flask_cognito_auth import CognitoAuthManager
 from flask_cognito_auth import login_handler
 from flask_cognito_auth import logout_handler
@@ -40,7 +42,25 @@ def api_auth(func):
 
 @application.route('/')
 def home():
-    return render_template('home.html')
+    global is_logged
+    if request.method == 'POST':
+        connection = mysql.connector.connect(
+            host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+            user = "admin",
+            password  = "admin123",
+            database = "clubeedb"
+        )
+        content = request.json
+        query = f"SELECT * FROM users WHERE studentnumber = {content['studentnumber']} AND {content['admin_password']};"
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        if len(result) > 0:
+            is_logged = True
+            return render_template('home.html')
+        else:
+            jsonify("Wrong credentials")
+    return render_template('login.html')
 
 #registration
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
@@ -59,7 +79,7 @@ def register():
     if len(result) > 0:
         return jsonify("User already exists")
     content = request.json
-    query = f"INSERT INTO users (full_name,email,amazon_id,studentnumber) VALUES ('{content['full_name']}', '{content['email']}','{content['amazon_id']}',{content['studentnumber']} );"
+    query = f"INSERT INTO users (full_name,email,admin_password,studentnumber) VALUES ('{content['full_name']}', '{content['email']}','{content['admin_password']}',{content['studentnumber']} );"
     cursor = connection.cursor()
     cursor.execute(query)
     connection.commit()
@@ -349,33 +369,46 @@ def updatechapterdescription():
 
 @application.route('/admin/events' , methods=['GET','POST'])
 def admin_events():
+    if is_logged == False:
+        return redirect('/')
     return render_template('events.html')
 
 @application.route('/admin/chapterprofile',methods=['POST', 'GET'])
-
 def admin_chapter_profile():
+    if is_logged == False:
+        return redirect('/')
     return render_template('chapterprofile.html')
 
 @application.route('/admin/activemembers')
 def admin_active_members():
+    if is_logged == False:
+        return redirect('/')
     return render_template('active_members.html')
 
 @application.route('/admin/adminprofile')
 def admin_admin_profile():
+    if is_logged == False:
+        return redirect('/')
     return render_template('chapteradmin.html')
 
 @application.route('/admin/events/addevents',methods=['POST', 'GET'])
 def admin_add_events():
+    if is_logged == False:
+        return redirect('/')
     return render_template('add_event.html')
 
 #new
 
 @application.route('/admin/chapter/addactivemember',methods=['POST', 'GET'])
 def admin_add_active_member():
+    if is_logged == False:
+        return redirect('/')
     return render_template('add_activemember.html')
 
 @application.route('/admin/chapter/editevent/',methods=['POST', 'GET'])
 def admin_edit_event():
+    if is_logged == False:
+        return redirect('/')
     return render_template('edit_event.html')
 
 #yeni fonksiyonlar
@@ -484,6 +517,11 @@ def unhighlightevent():
     connection.commit()
     return jsonify("Event Unhighlighted")
 
+@application.route('/logout')
+def logout():
+    global is_logged
+    is_logged = False
+    return redirect('/')
 
 if __name__ == "__main__":
     application.run()
