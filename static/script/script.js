@@ -1,3 +1,8 @@
+let logged_student;
+let logged_name;
+let logged_number;
+let logged_id;
+
 function viewEvents(){
     fetch('/api/events/1',{
       headers: {
@@ -30,8 +35,42 @@ function viewEvents(){
 
 }
 
+/*function setGlobal(email){
+  logged_student=email;
+  console.log(logged_student);
+  fetch('/getstudent/'+logged_student,{
+    headers: {
+      "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
+    },
+  })
+    .then(response=> response.json())
+    .then(data=> {
+      data2=data[0]
+      logged_id=data2[0];
+      logged_name=data2[1];
+      logged_student=data2[2];
+      logged_number=data2[4];
+    })
+  getAdminsChapter()
+}
+let logged_user_chapter_id;
+
+function getAdminsChapter(){
+  fetch('/getchapterid/'+logged_id,{
+    headers: {
+      "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
+    },
+  })
+    .then(response=> response.json())
+    .then(data=> {
+      data2=data[0]
+      logged_user_chapter_id=data2[0];
+    })
+}*/
 
 function viewEventsOfChapter(){
+  //console.log(logged_id)
+  //console.log(logged_name)
   fetch('/admin/events/1',{
     headers: {
       "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
@@ -111,7 +150,7 @@ function viewAllEvents(){
 }
 
 function viewChapterProfile(){
-  fetch('/api/chapter/4',{
+  fetch('/api/chapter/1',{
     headers:{"auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",},
   })
   .then(response=> response.json())
@@ -138,11 +177,12 @@ function viewEventData(){
   .then(data=> {
 
     data2=data[0]
+    document.getElementById("event_id").innerHTML=data2[0];
     document.getElementById("event_name").innerHTML=data2[1];
     document.getElementById("event_date").innerHTML=data2[3];
     document.getElementById("event_description").innerHTML=data2[2];
     document.getElementById("event_status").innerHTML=data2[5];
-    document.getElementById("event_highlight").innerHTML=data2[5];
+    document.getElementById("event_highlight").innerHTML=data2[6];
 
 
 
@@ -191,45 +231,3 @@ function viewAdminOfChapter(){
     })
 }
 
-/*
-  const form=document.getElementById('myForm');
-  if(form){
-  console.log("Screen opened")
-  form.addEventListener('submit', function(){
-      
-      console.log("Event listened")
-//      const formData=new FormData(form);
-      const event_name=getElementById("name").value
-      const event_description=getElementById("description").value
-      const event_date=getElementById("event_date").value
-      const event_photolink=getElementById("photolink").value
-      const event_status=getElementById("eventstatus").value
-      const event_highlighted=getElementById("highlighted").value
-      const event_chapter_id=getElementById("chapter_id").value
-      fetch('/api/createevent',{
-        method: 'POST',
-        headers: {
-          //"Server" : "Werkzeug/2.2.2 Python/3.8.10",
-          //"Content-Length": data.length,
-          //"Content-Type": "application/json",
-          "auth-key":"0d5d254b22d390d9e11a132d53521a229da9fa0ae9ba009a76499f57c1d64e30",
-        },
-        body: JSON({
-          name: event_name,
-          description: event_description,
-          event_date: event_date,
-          photolink: event_photolink,
-          eventstatus: event_status,
-          highlighted: event_highlighted,
-           chapter_id: event_chapter_id}),
-  })
-        .then(response=>response.json())
-        .then(data=>console.log(data)
-        )
-        .catch((error) => {
-          console.error('There has been a problem with your fetch operation:', error);
-        });
-
-});
-  }
-*/

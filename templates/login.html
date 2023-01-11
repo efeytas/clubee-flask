@@ -104,6 +104,7 @@
           <div class="field grouped">
             <div class="control">
               <button type="submit" class="button red">
+                <a href="{{url_for('home')}}"></a>
                 Login
               </button>
             </div>
@@ -120,6 +121,7 @@
       const formData =new FormData(form);
       const email=formData.get("email");
       const admin_password=formData.get('password');
+      //setGlobal(email);
       const data={
         admin_password: admin_password,
         email: email,
@@ -132,15 +134,13 @@
         },
         body:JSON.stringify(data),
       })
-      location.reload()
+
+      location.reload();
     }
     
     const form=document.getElementById('myForm');
     form.addEventListener('submit',logSubmit);
   </script>
-
-    
-
 
 </div>
 

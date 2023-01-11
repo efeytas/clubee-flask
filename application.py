@@ -39,10 +39,11 @@ def api_auth(func):
         return wrapper
     return decorator(func)
 
-@application.route('/', methods=['POST'])
+@application.route('/', methods=['POST','GET'])
 def home():  
+    global is_logged
     if request.method == 'POST': 
-        global is_logged
+    
         connection = mysql.connector.connect(
                 host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
                 user = "admin",
@@ -63,14 +64,13 @@ def home():
                            {"id" : result[0][0]})
         else:
             return jsonify("Wrong email or password")
+    elif request.method=="GET":
+        if is_logged:
+            return render_template("home.html")  
+        else:
+            return render_template("login.html")
     
-@application.route('/', methods=['GET'])
-def get_home():
-    global is_logged
-    if is_logged:
-        return render_template("home.html")  
-    else:
-        return render_template("login.html")
+
     
 #registration
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
@@ -319,6 +319,7 @@ def highlightevent():
     cursor = connection.cursor()
     cursor.execute(query)
     connection.commit()
+    print("Sucessfully highlighted")
     return jsonify("Event Highlighted")
 
 #edit status of event
@@ -526,6 +527,37 @@ def unhighlightevent():
     cursor.execute(query)
     connection.commit()
     return jsonify("Event Unhighlighted")
+
+@application.route('/getstudent/<int:Number>', methods=['GET']) 
+@api_auth
+def getstudent(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT * FROM users WHERE email = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print(result+"Here is result amk")
+    return result
+
+@application.route('/getchapterid/<int:Number>', methods=['GET']) 
+@api_auth
+def getchapterid(Number):
+    connection = mysql.connector.connect(
+        host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+        user = "admin",
+        password = "admin123",
+        database = "clubeedb"
+    )
+    query = f"SELECT id FROM chapter WHERE admin_id = {Number};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
 
 @application.route('/logout')
 def logout():
