@@ -39,36 +39,39 @@ def api_auth(func):
         return wrapper
     return decorator(func)
 
-@application.route('/main',methods=['GET'])
-def main():
-    return render_template('home.html')
-
 @application.route('/', methods=['POST'])
-def home():   
-    global is_logged
-    connection = mysql.connector.connect(
-            host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
-            user = "admin",
-            password  = "admin123",
-            database = "clubeedb"
-        )
-    content = request.json
-    query = f"SELECT * FROM users WHERE email ='{content['email']}' AND admin_password={content['admin_password']};"
-    cursor = connection.cursor()
-    cursor.execute(query)
-    result = cursor.fetchall()
-    print(result)
-    if len(result) > 0:
-        is_logged = True
-        return main()
-    else:
-        return print("Wrong credentials")
-
+def home():  
+    if request.method == 'POST': 
+        global is_logged
+        connection = mysql.connector.connect(
+                host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
+                user = "admin",
+                password  = "admin123",
+                database = "clubeedb"
+            )
+        content = request.json
+        query = f"SELECT * FROM users WHERE email ='{content['email']}' AND admin_password={content['admin_password']};"
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        print(result)
+        if len(result) > 0:
+            is_logged = True
+            return jsonify({"email" : result[0][2]},
+                           {"studentnumber" : result[0][4]},
+                           {"full_name" : result[0][1]},
+                           {"id" : result[0][0]})
+        else:
+            return jsonify("Wrong email or password")
+    
 @application.route('/', methods=['GET'])
 def get_home():
-    return render_template("login.html")   
-
-
+    global is_logged
+    if is_logged:
+        return render_template("home.html")  
+    else:
+        return render_template("login.html")
+    
 #registration
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
 @api_auth
