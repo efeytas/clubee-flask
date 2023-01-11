@@ -39,28 +39,35 @@ def api_auth(func):
         return wrapper
     return decorator(func)
 
+@application.route('/main',methods=['GET'])
+def main():
+    return render_template('home.html')
 
-@application.route('/')
-def home():
+@application.route('/', methods=['POST'])
+def home():   
     global is_logged
-    if request.method == 'POST':
-        connection = mysql.connector.connect(
+    connection = mysql.connector.connect(
             host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
             user = "admin",
             password  = "admin123",
             database = "clubeedb"
         )
-        content = request.json
-        query = f"SELECT * FROM users WHERE studentnumber = {content['studentnumber']} AND {content['admin_password']};"
-        cursor = connection.cursor()
-        cursor.execute(query)
-        result = cursor.fetchall()
-        if len(result) > 0:
-            is_logged = True
-            return render_template('home.html')
-        else:
-            jsonify("Wrong credentials")
-    return render_template('login.html')
+    content = request.json
+    query = f"SELECT * FROM users WHERE email ='{content['email']}' AND admin_password={content['admin_password']};"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print(result)
+    if len(result) > 0:
+        is_logged = True
+        return main()
+    else:
+        return print("Wrong credentials")
+
+@application.route('/', methods=['GET'])
+def get_home():
+    return render_template("login.html")   
+
 
 #registration
 @application.route('/api/register' , methods=['POST']) # full-name, email, amazon-id(NULL), studentnumber vermen gerekiyor üye oluyor
