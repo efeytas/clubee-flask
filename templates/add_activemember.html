@@ -80,7 +80,7 @@
 
             <div class="field">
               <div class="control">
-                <button type="submit" class="button green">
+                <button id="submitted" type="submit" class="button green">
                   Submit
                 </button>
               </div>
@@ -96,6 +96,7 @@
 
     const formData =new FormData(form);
     const student_id=formData.get("student_id");
+    const btn = document.getElementById('submitted');
 
     const data={
       studentnumber: student_id,
@@ -110,6 +111,7 @@
       },
       body:JSON.stringify(data),
     })
+    btn.textContent = 'Submitted';
   }
 
   const form=document.getElementById('myForm');

@@ -104,7 +104,7 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <input type="text" autocomplete="on" name="photolink" id="photolink" class="input" required>
+                      <input type="text" autocomplete="on" value="URL of events picture" name="photolink" id="photolink" class="input" required>
                     </div>
                   </div>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <input type="text" autocomplete="on" name="eventstatus" id="eventstatus" class="input" required>
+                      <input type="text" autocomplete="on" value="For active event enter 1; for inactive event 0" name="eventstatus" id="eventstatus" class="input" required>
                     </div>
                   </div>
                 </div>
@@ -137,7 +137,7 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <input type="text" autocomplete="on" name="chapter_id" id="chapter_id" value="chapter_id" class="input" required>
+                      <input type="text" autocomplete="on" name="chapter_id" id="chapter_id" class="input" required>
                     </div>
                   </div>
                 </div>
@@ -145,7 +145,7 @@
             <hr>
             <div class="field">
               <div class="control">
-                <button type="submit" class="button green">
+                <button id="submitted" type="submit" class="button green">
                   Submit
                 </button>
               </div>
@@ -172,6 +172,8 @@
     const highlighted=formData.get('highlighted');
     console.log(chapter_id,name,description);
 
+    const btn = document.getElementById('submitted');
+
     const data={
       name: name,
       description: description,
@@ -191,6 +193,9 @@
       },
       body:JSON.stringify(data),
     })
+    btn.textContent = 'Submitted';
+  
+
   }
 
   const form=document.getElementById('myForm');
