@@ -248,6 +248,7 @@ def participated(Number):
 
 #view events applied of specific user
 @application.route('/api/event/applied/<int:Number>', methods=['GET']) # number = studentnumber
+@api_auth
 def applied(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -290,6 +291,7 @@ def createevent():
 
 #edit event description
 @application.route('/api/edit-event-description', methods=['POST'])
+@api_auth
 def editchapterdescription():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -307,6 +309,7 @@ def editchapterdescription():
 
 #edit highlight event
 @application.route('/api/highlight-event', methods=['POST'])
+@api_auth
 def highlightevent():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -323,6 +326,7 @@ def highlightevent():
 
 #edit status of event
 @application.route('/api/edit-event-status', methods=['POST'])
+@api_auth
 def editeventstatus():
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
@@ -339,6 +343,7 @@ def editeventstatus():
 
 #update attendance of user in chapter
 @application.route('/api/update-attendance/<int:Number>', methods=['POST'])
+@api_auth
 def updateattendancestatus(Number):
     connection = mysql.connector.connect(
         host = "clubeedatabase.cucgzk7st4ht.eu-central-1.rds.amazonaws.com",
