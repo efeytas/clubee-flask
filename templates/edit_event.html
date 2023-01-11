@@ -109,7 +109,7 @@
             <div class="field">
                 <label class="label">Event Status</label>
                 <div class="control">
-                  <button id="btn1" class="button green">Set Status</button>
+                  <button id="btn1" class="button green">Active</button>
                 </div>
               </div>
             <hr>
@@ -144,7 +144,7 @@ btn.addEventListener('click', function handleClick() {
 const btn1 = document.getElementById('btn1');
 
 btn1.addEventListener('click', function handleClick() {
-  btn1.textContent = 'Status Set';
+  btn1.textContent = 'Disactive';
   this.disabled=true;
   this.style.backgroundColor= "grey";
 });

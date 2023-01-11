@@ -483,23 +483,15 @@ def addactivemember(Number):
     cursor = connection.cursor()
     cursor.execute(query)
     result = cursor.fetchone()
+    print(result)
     if len(result)==0:
         return jsonify("Such student doesn't exist")
     else:
-        query=f"SELECT chapter_id FROM active WHERE user_id = {result[0]};"
+
+        query = f"INSERT INTO active (status,chapter_id ,user_id) VALUES (1,{Number}, {result[0]});"
         cursor.execute(query)
-        result1 = cursor.fetchone()
-        print("The result")
-        print(result1[0])
-        print(" ")
-        print(Number)
-        if result1[0]==Number:
-            return jsonify("Student already active member")
-        else:
-            query = f"INSERT INTO active (status,chapter_id ,user_id) VALUES (1,{Number}, {result[0]});"
-            cursor.execute(query)
-            connection.commit()
-            return jsonify("Student added")
+        connection.commit()
+        return jsonify("Student added")
 
 
 @application.route('/admin/events/<int:Number>', methods=['GET']) # /api/events/1 GET attığın zaman sana eventın bilgilerini döndürür [[1,"DSC ITU is a non-profit developer group to learn, share, connect and delevop tech skills. Join us!","ITU DSC ",1,7]]
